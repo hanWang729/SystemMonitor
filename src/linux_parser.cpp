@@ -226,8 +226,10 @@ string LinuxParser::Ram(int pid) {
       std::istringstream linestream(line);
       while (linestream >> key >> value) {
         if (key == "VmSize:") {
-          value = to_string(stoi(value) / 1000);
-          return value;
+          if (std::all_of(value.begin(), value.end(), isdigit) && value != "") {
+            value = to_string(stoi(value) / 1000);
+            return value;
+          }
         }
       }
     }

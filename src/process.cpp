@@ -17,7 +17,8 @@ Process::Process(int p) {
   pid_ = p;
   username_ = User();
   cpu_ = CpuUtilization();
-  ram_ = stoi(Ram());
+  string r = Ram();
+  if (r != "") ram_ = stoi(r);
   uptime_ = UpTime();
 }
 
@@ -30,7 +31,8 @@ float Process::CpuUtilization() {
   vector<int> vsi = {13, 14, 15, 16, 21};
   vector<int> v{};
   for (int i : vsi) {
-    v.emplace_back(stoi(vs[i]));
+    if (std::all_of(vs[i].begin(), vs[i].end(), isdigit) && vs[i] != "")
+      v.emplace_back(stoi(vs[i]));
   }
   int uptime = LinuxParser::UpTime();
   int utime = v[0];
@@ -53,10 +55,12 @@ string Process::Command() { return LinuxParser::Command(pid_); }
 string Process::Ram() { return LinuxParser::Ram(pid_); }
 
 // TODO: Return the user (name) that generated this process
-string Process::User() { return username_; }
+string Process::User() { return LinuxParser::User(pid_); }
 
 // TODO: Return the age of this process (in seconds)
-long int Process::UpTime() { return LinuxParser::UpTime() - LinuxParser::UpTime(pid_); }
+long int Process::UpTime() {
+  return LinuxParser::UpTime() - LinuxParser::UpTime(pid_);
+}
 
 // TODO: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
