@@ -22,10 +22,10 @@ Process::Process(int p) {
   uptime_ = UpTime();
 }
 
-// TODO: Return this process's ID
+// Done: Return this process's ID
 int Process::Pid() { return pid_; }
 
-// TODO: Return this process's CPU utilization
+// Done: Return this process's CPU utilization
 float Process::CpuUtilization() {
   vector<string> vs = LinuxParser::CPU(pid_);
   vector<int> vsi = {13, 14, 15, 16, 21};
@@ -48,20 +48,20 @@ float Process::CpuUtilization() {
   return cpu_usage;
 }
 
-// TODO: Return the command that generated this process
+// Done: Return the command that generated this process
 string Process::Command() { return LinuxParser::Command(pid_); }
 
-// TODO: Return this process's memory utilization
+// Done: Return this process's memory utilization
 string Process::Ram() { return LinuxParser::Ram(pid_); }
 
-// TODO: Return the user (name) that generated this process
+// Done: Return the user (name) that generated this process
 string Process::User() { return LinuxParser::User(pid_); }
 
-// TODO: Return the age of this process (in seconds)
+// Done: Return the age of this process (in seconds)
 long int Process::UpTime() { return LinuxParser::UpTime(pid_); }
 
-// TODO: Overload the "less than" comparison operator for Process objects
+// Done: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const {
-  return a.cpu_ < cpu_ ? true : false;
+  return a.cpu_ < cpu_;
 }

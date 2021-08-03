@@ -11,16 +11,13 @@
 #include "process.h"
 #include "processor.h"
 
-using std::set;
-using std::size_t;
-using std::string;
-using std::vector;
+using namespace std;
 
 System::System(){
   processes_.clear();
 }
 
-// TODO: Return the system's CPU
+// Done: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
 // Done: Return a container composed of the system's processes
@@ -28,8 +25,10 @@ vector<Process>& System::Processes() {
   vector<int> pids = LinuxParser::Pids();
   processes_.clear();
   for (int i : pids) {
-    Process proc(i);
-    processes_.emplace_back(proc);
+    //Process proc(i);
+    //No need to call a construter of Process when using a emplace_back
+    //Suggested by a reviewer
+    processes_.emplace_back(i);
   }
   sort(processes_.begin(),processes_.end());
   return processes_;
